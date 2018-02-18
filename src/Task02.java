@@ -1,38 +1,41 @@
-import PrimeFactor.PollardRho;
-
 import java.util.ArrayList;
 import java.util.concurrent.CyclicBarrier;
 
-public class Task01 implements Runnable {
+import PrimeFactor.PollardRho;
+
+        import java.util.ArrayList;
+        import java.util.concurrent.CyclicBarrier;
+
+public class Task02 implements Runnable {
     private CyclicBarrier cyclicBarrier;
 
     ArrayList<Long> factors = new ArrayList<>();
 
-    public Task01(CyclicBarrier cyclicBarrier, ArrayList<Long> factors) {
+    public Task02(CyclicBarrier cyclicBarrier, ArrayList<Long> factors) {
         this.cyclicBarrier = cyclicBarrier;
         this.factors = factors;
     }
 
     public void run() {
-        long i = 3;
+        long i = 4;
         long start = System.currentTimeMillis();
         long end = start + 15 * 60 * 1000;
         while (System.currentTimeMillis() < end) {
-            boolean test = isConsecutive(i);
-            if (test) {
-                System.out.println("------------");
-                System.out.println("Number: "+i);
-                System.out.println("First Primsum: " +generatePrimSum(i));
-                System.out.println("Second Primsum: " + generatePrimSum(i + 1));
-                System.out.println("------------");
+                boolean test = isConsecutive(i);
+                if (test) {
+                    System.out.println("------------");
+                    System.out.println("Number: "+i);
+                    System.out.println("First Primsum: " +generatePrimSum(i));
+                    System.out.println("Second Primsum: " + generatePrimSum(i + 1));
+                    System.out.println("------------");
 
+                }
+                i = i+2;
             }
-            i = i + 2;
-        }
     }
 
     public Long generatePrimSum(long number) {
-        PollardRho pollardRho = new PollardRho();
+        PrimeFactor.PollardRho pollardRho = new PrimeFactor.PollardRho();
         factors = pollardRho.factorize(number);
         return factors.stream().mapToLong(factor -> factor).sum();
     }
